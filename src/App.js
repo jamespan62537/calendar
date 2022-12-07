@@ -1,23 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+// Css
+import "./App.css";
+// Component
+import CalendarComponent from "./components/Core/CalendarComponent";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="w-full h-screen flex justify-center items-center">
+      <CalendarComponent />
     </div>
   );
 }
