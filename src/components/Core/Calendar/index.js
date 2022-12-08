@@ -19,6 +19,13 @@ import {
 
 const today = new Date();
 
+const switchOperation = {
+  MINUS: "minus",
+  PLUS: "plus",
+};
+
+const { MINUS, PLUS } = switchOperation;
+
 const tableType = {
   DAYS_TABLE: "daysTable",
   MONTH_TABLE: "monthTable",
@@ -29,13 +36,15 @@ const { DAYS_TABLE, MONTH_TABLE, YEAR_TABLE } = tableType;
 
 const defaultProps = {
   initialValue: null,
+  onSelected: () => {},
 };
 
 const propTypes = {
   initialValue: PropTypes.object,
+  onSelected: PropTypes.func,
 };
 
-const CalendarComponent = ({ initialValue }) => {
+const CalendarComponent = ({ initialValue, onSelected }) => {
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
   const [date, setDate] = useState(initialValue || today);
   const [day, setDay] = useState(date.getDate());
@@ -69,13 +78,37 @@ const CalendarComponent = ({ initialValue }) => {
     []
   );
 
-  const handleSetDate = useCallback((date) => setDate(date), []);
+  const handleSetDate = useCallback(
+    (date) => {
+      onSelected(date);
+      setDate(date);
+    },
+    [onSelected]
+  );
 
   const handleSwitchTable = useCallback((table) => setCurrentTable(table), []);
 
   const handleSetCalendarVisible = useCallback(
     (isVisible) => setIsCalendarVisible(isVisible),
     []
+  );
+
+  const handleSwitchDateByTable = useCallback(
+    (operation) => {
+      if (currentTable === DAYS_TABLE) {
+        if (operation === PLUS) handleSetDate(new Date(year, month + 1, day));
+        else handleSetDate(new Date(year, month - 1, day));
+      }
+      if (currentTable === MONTH_TABLE) {
+        if (operation === PLUS) handleSetDate(new Date(year + 1, month, day));
+        else handleSetDate(new Date(year - 1, month, day));
+      }
+      if (currentTable === YEAR_TABLE) {
+        if (operation === PLUS) handleSetDate(new Date(year + 10, month, day));
+        else handleSetDate(new Date(year - 10, month, day));
+      }
+    },
+    [currentTable, day, handleSetDate, month, year]
   );
 
   const renderYearWithMonth = useCallback(() => {
@@ -137,15 +170,11 @@ const CalendarComponent = ({ initialValue }) => {
     >
       <CalendarContainerComponent isCalendarVisible={isCalendarVisible}>
         <CalendarHeaderComponent>
-          <ButtonComponent
-            onClick={() => handleSetDate(new Date(year, month - 1, day))}
-          >
+          <ButtonComponent onClick={() => handleSwitchDateByTable(MINUS)}>
             Prev
           </ButtonComponent>
           {renderYearWithMonth()}
-          <ButtonComponent
-            onClick={() => handleSetDate(new Date(year, month + 1, day))}
-          >
+          <ButtonComponent onClick={() => handleSwitchDateByTable(PLUS)}>
             Next
           </ButtonComponent>
         </CalendarHeaderComponent>

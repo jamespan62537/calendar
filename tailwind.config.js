@@ -18,6 +18,9 @@ module.exports = {
         gray: {
           100: "#eeeeee",
         },
+        red: {
+          600: "#db3d44",
+        },
       },
     },
   },

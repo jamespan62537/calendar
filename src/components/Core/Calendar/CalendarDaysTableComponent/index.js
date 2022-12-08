@@ -106,7 +106,12 @@ const CalendarDaysTableComponent = ({
       let type = CalendarUnitComponent.Type.DEFAULT;
       if (_day === day) type = CalendarUnitComponent.Type.SELECTED;
       let isToday = false;
-      if (_day === new Date().getDate() && _day !== day) isToday = true;
+      if (
+        _day === new Date().getDate() &&
+        month === new Date().getMonth() &&
+        _day !== day
+      )
+        isToday = true;
 
       // Show current month day
       return (
