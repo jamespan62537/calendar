@@ -1,15 +1,10 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import PropTypes from "prop-types";
-import cx from "classnames";
+
+// Component
+import CalendarUnitComponent from "../CalendarUnitComponent";
 
 const DAYS_TABLE = "daysTable";
-
-const Type = {
-  DEFAULT: "default",
-  SELECTED: "selected",
-};
-
-const { DEFAULT, SELECTED } = Type;
 
 const defaultProps = {
   year: 1970,
@@ -37,14 +32,6 @@ const CalendarMonthTableComponent = ({
   handleSetDate,
   handleSwitchTable,
 }) => {
-  const typeMap = useMemo(
-    () => ({
-      [DEFAULT]: "text-black bg-white",
-      [SELECTED]: "text-white bg-red-600",
-    }),
-    []
-  );
-
   const handleClick = useCallback(
     (index) => {
       handleSetDate(new Date(year, index, day));
@@ -55,22 +42,23 @@ const CalendarMonthTableComponent = ({
 
   return (
     <>
-      {monthList.map((_month, index) => (
-        <div
-          className={cx(
-            "w-1/4 h-93px p-2 rounded-full cursor-pointer flex justify-center items-center",
-            {
-              [typeMap[DEFAULT]]: index !== month,
-              [typeMap[SELECTED]]: index === month,
-            }
-          )}
-          onClick={() => {
-            handleClick(index);
-          }}
-        >
-          {_month}
-        </div>
-      ))}
+      {monthList.map((_month, index) => {
+        let type = CalendarUnitComponent.Type.DEFAULT;
+        if (index === month) type = CalendarUnitComponent.Type.SELECTED;
+
+        return (
+          <CalendarUnitComponent
+            className="w-1/4 h-93px"
+            key={_month}
+            type={type}
+            onClick={() => {
+              handleClick(index);
+            }}
+          >
+            {_month}
+          </CalendarUnitComponent>
+        );
+      })}
     </>
   );
 };

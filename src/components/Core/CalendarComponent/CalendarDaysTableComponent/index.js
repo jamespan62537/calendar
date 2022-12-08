@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 
 // Component
-import CalendarDayComponent from "../CalendarDayComponent";
+import CalendarUnitComponent from "../CalendarUnitComponent";
 
 const defaultProps = {
   year: 1970,
@@ -52,7 +52,9 @@ const CalendarDaysTableComponent = ({
 
   const renderWeekDays = useCallback(() => {
     return daysOfTheWeek.map((day) => (
-      <CalendarDayComponent key={day}>{day}</CalendarDayComponent>
+      <CalendarUnitComponent className="w-14.2% h-53px" key={day}>
+        {day}
+      </CalendarUnitComponent>
     ));
   }, [daysOfTheWeek]);
 
@@ -67,39 +69,44 @@ const CalendarDaysTableComponent = ({
           currentDayOfTheMonth[month - 1] || currentDayOfTheMonth[11];
 
         return (
-          <CalendarDayComponent
+          <CalendarUnitComponent
+            className="w-14.2% h-53px"
             key={index}
-            type={CalendarDayComponent.Type.DISABLE}
+            type={CalendarUnitComponent.Type.DISABLE}
           >
             {lastMonthDays + _day}
-          </CalendarDayComponent>
+          </CalendarUnitComponent>
         );
       }
       // Show next month days
       if (_day > currentDayOfTheMonth[month]) {
         return (
-          <CalendarDayComponent
+          <CalendarUnitComponent
+            className="w-14.2% h-53px"
             key={index}
-            type={CalendarDayComponent.Type.DISABLE}
+            type={CalendarUnitComponent.Type.DISABLE}
           >
             {_day - currentDayOfTheMonth[month]}
-          </CalendarDayComponent>
+          </CalendarUnitComponent>
         );
       }
 
+      let type = CalendarUnitComponent.Type.DEFAULT;
+      if (_day === day) type = CalendarUnitComponent.Type.SELECTED;
+      let isToday = false;
+      if (_day === new Date().getDate() && _day !== day) isToday = true;
+
       // Show current month day
       return (
-        <CalendarDayComponent
+        <CalendarUnitComponent
+          className="w-14.2% h-53px"
           key={index}
+          isToday={isToday}
+          type={type}
           onClick={() => handleSetDate(new Date(year, month, _day))}
-          type={
-            _day === day
-              ? CalendarDayComponent.Type.SELECTED
-              : CalendarDayComponent.Type.DEFAULT
-          }
         >
           {_day}
-        </CalendarDayComponent>
+        </CalendarUnitComponent>
       );
     });
   }, [startDay, currentDayOfTheMonth, month, day, handleSetDate, year]);

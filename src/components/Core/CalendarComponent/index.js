@@ -7,8 +7,13 @@ import CalendarBodyComponent from "./CalendarBodyComponent";
 import ButtonComponent from "../ButtonComponent";
 import CalendarDaysTableComponent from "./CalendarDaysTableComponent";
 import CalendarMonthTableComponent from "./CalendarMonthTableComponent";
+import CalendarYearTableComponent from "./CalendarYearTableComponent";
 // Util
-import { getStartDayOfMonth, checkIsLeapYear } from "../../../utils/timeUtil";
+import {
+  getStartDayOfMonth,
+  checkIsLeapYear,
+  getYearPeriodUtil,
+} from "../../../utils/timeUtil";
 
 const today = new Date();
 
@@ -30,6 +35,8 @@ const CalendarComponent = () => {
   );
   const [startDay, setStartDay] = useState(getStartDayOfMonth(date));
   const [currentTable, setCurrentTable] = useState(DAYS_TABLE);
+
+  const yearPeriod = useMemo(() => getYearPeriodUtil(year), [year]);
 
   const monthList = useMemo(
     () => [
@@ -67,13 +74,22 @@ const CalendarComponent = () => {
           else handleSwitchTable(DAYS_TABLE);
         }}
       >
-        {currentTable !== MONTH_TABLE && (
-          <span className="mx-1">{monthList[month]}</span>
+        {currentTable === DAYS_TABLE && (
+          <>
+            <span className="mx-1">{monthList[month]}</span>
+            <span className="mx-1">{year}</span>
+          </>
         )}
-        <span className="mx-1">{year}</span>
+        {currentTable === MONTH_TABLE && <span className="mx-1">{year}</span>}
+        {currentTable === YEAR_TABLE && (
+          <>
+            <span className="mx-1">{yearPeriod[0]}</span> -
+            <span className="mx-1">{yearPeriod[yearPeriod.length - 1]}</span>
+          </>
+        )}
       </div>
     );
-  }, [month, monthList, year, currentTable, handleSwitchTable]);
+  }, [month, monthList, year, yearPeriod, currentTable, handleSwitchTable]);
 
   useEffect(() => {
     setDay(date.getDate());
@@ -120,7 +136,14 @@ const CalendarComponent = () => {
           />
         )}
         {currentTable === YEAR_TABLE && (
-          <>dddd</>
+          <CalendarYearTableComponent
+            year={year}
+            month={month}
+            day={day}
+            yearPeriod={yearPeriod}
+            handleSetDate={handleSetDate}
+            handleSwitchTable={handleSwitchTable}
+          />
         )}
       </CalendarBodyComponent>
     </CalendarContainerComponent>
