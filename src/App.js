@@ -1,7 +1,7 @@
 // Css
 import "./App.css";
 // Component
-import CalendarComponent from "./components/Core/CalendarComponent";
+import CalendarComponent from "./components/Core/Calendar";
 
 function App() {
   return (

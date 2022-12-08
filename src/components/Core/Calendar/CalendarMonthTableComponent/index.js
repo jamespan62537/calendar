@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import PropTypes from "prop-types";
 
 // Component
-import CalendarUnitComponent from "../CalendarUnitComponent";
+import CalendarUnitComponent from "../CalendarDayComponent";
 
 const DAYS_TABLE = "daysTable";
 

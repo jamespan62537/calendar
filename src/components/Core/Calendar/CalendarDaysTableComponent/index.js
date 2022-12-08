@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 
 // Component
-import CalendarUnitComponent from "../CalendarUnitComponent";
+import CalendarUnitComponent from "../CalendarDayComponent";
 
 const defaultProps = {
   year: 1970,
@@ -11,6 +11,7 @@ const defaultProps = {
   isLeapYear: false,
   startDay: 0,
   handleSetDate: () => {},
+  handleSetCalendarVisible: () => {},
 };
 
 const propTypes = {
@@ -20,6 +21,7 @@ const propTypes = {
   isLeapYear: PropTypes.bool,
   startDay: PropTypes.number,
   handleSetDate: PropTypes.func,
+  handleSetCalendarVisible: PropTypes.func,
 };
 
 const CalendarDaysTableComponent = ({
@@ -29,6 +31,7 @@ const CalendarDaysTableComponent = ({
   isLeapYear,
   startDay,
   handleSetDate,
+  handleSetCalendarVisible,
 }) => {
   const daysOfTheWeek = useMemo(
     () => ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
@@ -48,6 +51,15 @@ const CalendarDaysTableComponent = ({
   const currentDayOfTheMonth = useMemo(
     () => (isLeapYear ? leapDayOfTheMonth : commonDayOfTheMonth),
     [isLeapYear, commonDayOfTheMonth, leapDayOfTheMonth]
+  );
+
+  const handleClick = useCallback(
+    (e, _day) => {
+      e.stopPropagation();
+      handleSetDate(new Date(year, month, _day));
+      handleSetCalendarVisible(false);
+    },
+    [handleSetCalendarVisible, handleSetDate, month, year]
   );
 
   const renderWeekDays = useCallback(() => {
@@ -103,13 +115,13 @@ const CalendarDaysTableComponent = ({
           key={index}
           isToday={isToday}
           type={type}
-          onClick={() => handleSetDate(new Date(year, month, _day))}
+          onClick={(e) => handleClick(e, _day)}
         >
           {_day}
         </CalendarUnitComponent>
       );
     });
-  }, [startDay, currentDayOfTheMonth, month, day, handleSetDate, year]);
+  }, [startDay, currentDayOfTheMonth, month, day, handleClick]);
 
   return (
     <>
