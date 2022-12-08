@@ -4,8 +4,17 @@ export const getStartDayOfMonth = (date) =>
 export const checkIsLeapYear = (year) =>
   (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 
-const getShiftedMonth = (month) => {
-  return ((month + 1 + 9) % 12) + 1;
+const getShiftedMonth = (month) => ((month + 1 + 9) % 12) + 1;
+
+export const getYearPeriodUtil = (year) => {
+  const currentYearPosition = year % 10;
+  const startYear = year - (1 + currentYearPosition);
+  const endYear = year + (10 - currentYearPosition);
+  let yearPeriod = [];
+  for (let i = startYear; i <= endYear; i++) {
+    yearPeriod.push(i);
+  }
+  return yearPeriod;
 };
 
 export const getStartDayOfMonth2 = (day, month, year) => {
