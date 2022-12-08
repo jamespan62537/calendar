@@ -16,8 +16,12 @@ import {
   checkIsLeapYear,
   getYearPeriodUtil,
 } from "../../../utils/timeUtil";
+// Enum
+import { CalendarTableTypeEnum } from "../../../enums/CalendarEnum";
 
 const today = new Date();
+
+const { DAYS_TABLE, MONTH_TABLE, YEAR_TABLE } = CalendarTableTypeEnum;
 
 const switchOperation = {
   MINUS: "minus",
@@ -25,14 +29,6 @@ const switchOperation = {
 };
 
 const { MINUS, PLUS } = switchOperation;
-
-const tableType = {
-  DAYS_TABLE: "daysTable",
-  MONTH_TABLE: "monthTable",
-  YEAR_TABLE: "yearTable",
-};
-
-const { DAYS_TABLE, MONTH_TABLE, YEAR_TABLE } = tableType;
 
 const defaultProps = {
   initialValue: null,

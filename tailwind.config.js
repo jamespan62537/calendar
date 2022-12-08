@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {
+      screens: {
+        md: "992px",
+      },
       borderWidth: {
         1: "1px",
       },
@@ -11,7 +14,9 @@ module.exports = {
         "400px": "400px",
       },
       height: {
+        "37px": "37px",
         "53px": "53px",
+        "65px": "65px",
         "93px": "93px",
       },
       colors: {

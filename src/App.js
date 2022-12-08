@@ -11,7 +11,7 @@ function App() {
   }, []);
 
   return (
-    <div className="w-full h-screen flex justify-center items-start p-5">
+    <div className="w-full h-screen flex justify-start items-start p-5">
       <CalendarComponent onSelected={onSelected} />
     </div>
   );

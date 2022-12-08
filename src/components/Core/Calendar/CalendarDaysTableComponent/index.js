@@ -64,7 +64,7 @@ const CalendarDaysTableComponent = ({
 
   const renderWeekDays = useCallback(() => {
     return daysOfTheWeek.map((day) => (
-      <CalendarUnitComponent className="w-14.2% h-53px" key={day}>
+      <CalendarUnitComponent className="w-14.2% h-37px md:h-53px" key={day}>
         {day}
       </CalendarUnitComponent>
     ));
@@ -82,7 +82,7 @@ const CalendarDaysTableComponent = ({
 
         return (
           <CalendarUnitComponent
-            className="w-14.2% h-53px"
+            className="w-14.2% h-37px md:h-53px"
             key={index}
             type={CalendarUnitComponent.Type.DISABLE}
           >
@@ -94,7 +94,7 @@ const CalendarDaysTableComponent = ({
       if (_day > currentDayOfTheMonth[month]) {
         return (
           <CalendarUnitComponent
-            className="w-14.2% h-53px"
+            className="w-14.2% h-37px md:h-53px"
             key={index}
             type={CalendarUnitComponent.Type.DISABLE}
           >
@@ -116,7 +116,7 @@ const CalendarDaysTableComponent = ({
       // Show current month day
       return (
         <CalendarUnitComponent
-          className="w-14.2% h-53px"
+          className="w-14.2% h-37px md:h-53px"
           key={index}
           isToday={isToday}
           type={type}

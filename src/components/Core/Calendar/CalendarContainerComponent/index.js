@@ -14,7 +14,7 @@ const CalendarContainerComponent = ({ children, isCalendarVisible }) => {
   return (
     <>
       {isCalendarVisible && (
-        <div className="absolute top-12 left-0 w-400px border shadow-lg p-3">{children}</div>
+        <div className="absolute top-12 left-0 w-72 md:w-400px border shadow-lg p-3">{children}</div>
       )}
     </>
   );

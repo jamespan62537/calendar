@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 
 // Component
 import CalendarUnitComponent from "../CalendarDayComponent";
+// Enum
+import { CalendarTableTypeEnum } from "../../../../enums/CalendarEnum";
 
-const MONTH_TABLE = "monthTable";
+const { MONTH_TABLE } = CalendarTableTypeEnum;
 
 const defaultProps = {
   year: 1970,
@@ -52,7 +54,7 @@ const CalendarYearTableComponent = ({
 
         return (
           <CalendarUnitComponent
-            className="w-1/4 h-93px"
+            className="w-1/4 h-65px"
             key={_year}
             type={type}
             onClick={() => {
